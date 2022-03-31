@@ -3,12 +3,15 @@ class SymbolTable:
         self.MAX = 15
         self.arr = [[] for i in range(self.MAX)]
 
+    # This is the Hash function
     def get_hash(self, symbol):
         hash = 0
         for char in symbol:
-            hash += ord(char) + 23
-        return hash % self.MAX
+            hash += ord(char) + 23      # The formula is sum of the ascii value + 23 
+        return hash % self.MAX          # Finally it will return the sum mod arry size
 
+    # This is the Inssertion Function
+    # For the collision we use Chaining method
     def add(self, symbol, type_):
         hash = self.get_hash(symbol)
         found = False
@@ -20,6 +23,7 @@ class SymbolTable:
         if not found:
             self.arr[hash].append((symbol, type_))
     
+    # This is the lookup function
     def get(self, symbol):
         hash = self.get_hash(symbol)
         for element in self.arr[hash]:
@@ -27,6 +31,7 @@ class SymbolTable:
                 return print(f'\n({symbol}) symbol already exists in the symbol-table.')
         return print(f'\n({symbol}) symbol does not exists in the symbol-table.')
     
+    # This is the Delete function
     def delete(self, symbol):
         hash = self.get_hash(symbol)
         for index, element in enumerate(self.arr[hash]):
@@ -34,6 +39,7 @@ class SymbolTable:
                 print(f'\n({symbol}) is deleted from the symbol-table.')
                 del self.arr[hash][index]
     
+    # This is the dupming function
     def show(self):
         print('\n')
         for index, ls in enumerate(self.arr):
@@ -50,9 +56,13 @@ class SymbolTable:
             print(f'{index}: {ls}')
         
 
+# This part will not run if you import the file in different file
+# It will only run if you execute this file directly
+# But you can import and use the class in different files
 if __name__ == "__main__":
     symbol_table = SymbolTable()
-    display_text = '\nPress 1 to insert a new symbol along with its type into the symbol-table\n\n' \
+    display_text = '\n' \
+        'Press 1 to insert a new symbol along with its type into the symbol-table\n\n' \
         'Press 2 to lookup whether a given symbol already exists in the symbol-table or not\n\n' \
         'Press 3 to dump the contents of the symbol table to the console\n\n' \
         'Press 4 to delete a given symbol if it already exists in the symbol-table\n\n' \
